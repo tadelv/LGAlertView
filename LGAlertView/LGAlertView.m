@@ -1680,6 +1680,14 @@ LGAlertViewType;
 
     [keyWindow endEditing:YES];
 
+    // iOS13以上需要设置UIScene，否则不显示
+    if (@available(iOS 13, *))
+    {
+        UIScene *scene = [[[UIApplication sharedApplication].connectedScenes allObjects] firstObject];
+        self.window.windowScene = scene;
+    }
+
+
     if (!hidden && keyWindow != LGAlertViewHelper.appWindow) {
         keyWindow.hidden = YES;
     }
