@@ -132,6 +132,20 @@ CGFloat const LGAlertViewButtonImageOffsetFromTitle = 8.0;
 
 #if TARGET_OS_IOS
 + (UIWindow *)appWindow {
+    // UIApplication.windows is in no particular order on iOS 15+, so windows[0] is unreliable.
+    // Find the main app window: the first window whose class is exactly UIWindow (not a subclass
+    // like LGAlertViewWindow or system UIWindow subclasses).
+    if (@available(iOS 13, *)) {
+        for (UIWindowScene *scene in [UIApplication sharedApplication].connectedScenes) {
+            if ([scene isKindOfClass:[UIWindowScene class]]) {
+                for (UIWindow *window in ((UIWindowScene *)scene).windows) {
+                    if ([window class] == [UIWindow class]) {
+                        return window;
+                    }
+                }
+            }
+        }
+    }
     return [UIApplication sharedApplication].windows[0];
 }
 

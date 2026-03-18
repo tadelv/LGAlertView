@@ -1812,7 +1812,11 @@ LGAlertViewType;
     if (!self.isShowing) return;
 
     if (self.window.isHidden) {
+        self.showing = NO;
         [self dismissComplete];
+        if (completionHandler) {
+            completionHandler();
+        }
         return;
     }
 
@@ -1912,6 +1916,12 @@ LGAlertViewType;
     [self removeObservers];
 
     self.window.hidden = YES;
+    if (@available(iOS 13, *)) {
+        // Remove from the window scene so UIKit no longer considers this window when restoring
+        // the key window after future alerts are dismissed. Without this, UIKit's key-window
+        // restoration can revive a stale LGAlertViewWindow, making it visible and blocking touches.
+        self.window.windowScene = nil;
+    }
 
     // -----
 
