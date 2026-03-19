@@ -59,9 +59,9 @@ extern NSString * _Nonnull const kLGAlertViewAnimationDuration;
 
 #pragma mark - Types
 
-typedef void (^ _Nullable LGAlertViewCompletionHandler)(void);
-typedef void (^ _Nullable LGAlertViewHandler)(LGAlertView * _Nonnull alertView);
-typedef void (^ _Nullable LGAlertViewActionHandler)(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title);
+typedef void (^ _Nullable LGAlertViewCompletionHandler)(void) __attribute__((swift_attr("@MainActor")));
+typedef void (^ _Nullable LGAlertViewHandler)(LGAlertView * _Nonnull alertView) __attribute__((swift_attr("@MainActor")));
+typedef void (^ _Nullable LGAlertViewActionHandler)(LGAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) __attribute__((swift_attr("@MainActor")));
 typedef void (^ _Nullable LGAlertViewTextFieldsSetupHandler)(UITextField * _Nonnull textField, NSUInteger index);
 typedef void (^ _Nullable LGAlertViewAnimationsBlock)(LGAlertView * _Nonnull alertView, NSTimeInterval duration);
 
